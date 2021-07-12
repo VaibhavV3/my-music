@@ -143,6 +143,9 @@ const PictureSlide = (props) => {
     }
     currentPosition = position;
     //console.log(currentPosition + ' / ' + maxOffset);
+    if (state.scrollViewRef === null || state.scrollViewRef.current === null) {
+      return;
+    }
     state.scrollViewRef.current.scrollToOffset({
       offset: position,
       animated: true,

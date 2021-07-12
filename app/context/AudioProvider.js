@@ -49,6 +49,7 @@ class AudioProvider extends Component {
     });
     media = await MediaLibrary.getAssetsAsync({
       mediaType: 'audio', // audio, photo, video, unknown options available
+      sortBy: [MediaLibrary.SortBy.duration],
       first: media.totalCount,
     });
 
