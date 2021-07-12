@@ -19,7 +19,7 @@ const { width, height } = Dimensions.get('window');
 const SPACING = 10;
 const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.72 : width * 0.74;
 const SPACER_ITEM_SIZE = (width - ITEM_SIZE) / 2;
-const BACKDROP_HEIGHT = height * 0.6;
+const BACKDROP_HEIGHT = height * 0.7;
 
 const Loading = () => {
   return (
@@ -98,7 +98,6 @@ const PictureSlide = (props) => {
   React.useEffect(() => {
     async function getData() {
       const img = await getImages();
-      //console.log(img);
       if (img.length > state.images.length - 2) {
         setState((state) => {
           return {
@@ -246,9 +245,9 @@ const PictureSlide = (props) => {
                   style={styles.posterImages}
                 />
                 {/* <Text style={{ fontSize: 24 }}> Name </Text> */}
-                {/* <Text style={{ fontSize: 15 }} numberOfLines={3}>
-                  Sukoon Mila !!!
-                </Text> */}
+                <Text style={styles.captionStyle} numberOfLines={3}>
+                  {item.caption}
+                </Text>
               </Animated.View>
             </View>
           );
@@ -281,6 +280,10 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     margin: 0,
     marginBottom: 10,
+  },
+  captionStyle: {
+    fontSize: 15,
+    color: color.FIVE,
   },
 });
 export default PictureSlide;

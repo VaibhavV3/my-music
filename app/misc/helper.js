@@ -4,7 +4,7 @@ export const storeAudioForNextOpening = async (audio, index) => {
   AsyncStorage.setItem('previousAudio', JSON.stringify({ audio, index }));
 };
 
-export const addImageToList = async (imagePath) => {
+export const addImageToList = async (imagePath, imageName, caption) => {
   //await AsyncStorage.clear();
   const list = await AsyncStorage.getItem('ImageList');
   let imageCount = Number(await AsyncStorage.getItem('ImageCount'));
@@ -24,14 +24,30 @@ export const addImageToList = async (imagePath) => {
   imageCount = imageCount + 1;
   AsyncStorage.setItem('ImageList', JSON.stringify(images));
   AsyncStorage.setItem('ImageCount', JSON.stringify(imageCount));
+  AsyncStorage.setItem(imageName, caption);
 };
 
 export const getImagesFromStore = async () => {
   let list = await AsyncStorage.getItem('ImageList');
   //console.log(typeof list);
   const imgs = JSON.parse(list);
-  //console.log(imgs);
-  return imgs;
+  let res = [];
+  for (var i = 0; i < imgs.length; i++) {
+    var arr = imgs[i]['path'].split('/');
+    const fileName = arr[arr.length - 1];
+    const caption = await getCaption(fileName);
+    const rxt = {
+      key: imgs[i]['key'],
+      path: imgs[i]['path'],
+      caption,
+    };
+    res.push(rxt);
+  }
+  return res;
+};
+
+export const getCaption = async (fileName) => {
+  return await AsyncStorage.getItem(fileName);
 };
 
 export const convertTime = (minutes) => {

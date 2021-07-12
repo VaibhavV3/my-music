@@ -98,6 +98,7 @@ const AppNavigator = () => {
           height: '7%',
           zIndex: 10,
         },
+        keyboardHidesTabBar: true,
         activeBackgroundColor: color.TERNARY,
         // activeTintColor: color.SECONDARY,
         // inactiveTintColor: color.APPLICATION_BG,

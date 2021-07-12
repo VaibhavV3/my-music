@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Button,
-  Image,
+  Dimensions,
+  TextInput,
   View,
   Platform,
   StyleSheet,
@@ -14,8 +14,11 @@ import Screen from '../components/Screen';
 import { addImageToList } from '../misc/helper';
 import color from '../misc/color';
 
+const { width } = Dimensions.get('window');
+
 const Pictures = () => {
   const [image, setImage] = useState(null);
+  const [caption, setCaption] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -35,43 +38,54 @@ const Pictures = () => {
       allowsEditing: false,
       quality: 1,
     });
-    if (result.cancelled) return;
-    //console.log(result);
-    //const fileSplits = result.uri.split('/');
-    //const fileName = fileSplits[fileSplits.length - 1];
-    //console.log(fileName);
+    if (result.cancelled) {
+      setImage(null);
+    } else {
+      setImage(result);
+    }
+  };
+
+  const addImage = async () => {
+    console.log(caption);
+    if (image === null) return;
 
     try {
-      const asset = await MediaLibrary.createAssetAsync(result.uri);
+      const asset = await MediaLibrary.createAssetAsync(image.uri);
       const album = await MediaLibrary.getAlbumAsync('my-music');
-      //console.log(asset);
-      //console.log(album);
+
       if (album == null) {
         await MediaLibrary.createAlbumAsync('my-music', asset, false);
       } else {
         await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
       }
-      //console.log(asset.uri);
+
       var arr = asset.uri.split('/');
-      const fileName =
-        'file:///storage/emulated/0/Pictures/my-music/' + arr[arr.length - 1];
-      //console.log(fileName);
-      addImageToList(fileName);
+      const fileName = arr[arr.length - 1];
+      const filePath =
+        'file:///storage/emulated/0/Pictures/my-music/' + fileName;
+
+      addImageToList(filePath, fileName, caption);
+      setCaption('');
     } catch (e) {
       console.log(e);
-    }
-
-    //saveImage(result.base64, fileName);
-
-    if (!result.cancelled) {
-      setImage(result.uri);
     }
   };
 
   return (
     <Screen style={{ flex: 1 }}>
-      <View style={styles.uploadContainer}>
+      <View style={styles.buttonContainer}>
         <Pressable onPress={pickImage} style={styles.button}>
+          <Text style={styles.text}>Choose Image</Text>
+        </Pressable>
+      </View>
+      <TextInput
+        value={caption}
+        style={styles.input}
+        onChangeText={(value) => setCaption(value)}
+        multiline={true}
+      />
+      <View style={styles.buttonContainer}>
+        <Pressable onPress={addImage} style={styles.button}>
           <Text style={styles.text}>Add Image</Text>
         </Pressable>
       </View>
@@ -84,17 +98,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  uploadContainer: {
-    height: 100,
+  buttonContainer: {
+    padding: 25,
   },
   button: {
-    alignItems: 'center',
+    alignSelf: 'center',
     justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
     borderRadius: 25,
     elevation: 3,
     backgroundColor: color.SECONDARY,
+    width: width - 140,
+    paddingVertical: 15,
   },
   text: {
     fontSize: 16,
@@ -102,6 +116,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     letterSpacing: 0.25,
     color: color.FIVE,
+    alignSelf: 'center',
+  },
+  input: {
+    borderWidth: 2,
+    borderColor: color.FIVE,
+    alignSelf: 'center',
+    width: width - 80,
+    height: 200,
+    backgroundColor: color.FIVE,
+    borderRadius: 34,
+    color: color.BUTTONS,
+    fontSize: 18,
+    padding: 5,
   },
 });
 export default Pictures;
