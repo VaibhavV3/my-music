@@ -228,7 +228,7 @@ const PictureSlide = (props) => {
           ];
           const translateY = scrollX.interpolate({
             inputRange,
-            outputRange: [180, 130, 180],
+            outputRange: [60, 10, 60],
             extrapolate: 'clamp',
           });
           return (
@@ -248,7 +248,7 @@ const PictureSlide = (props) => {
                   style={styles.posterImages}
                 />
                 {/* <Text style={{ fontSize: 24 }}> Name </Text> */}
-                <Text style={styles.captionStyle} numberOfLines={3}>
+                <Text style={styles.captionStyle} numberOfLines={5}>
                   {item.caption}
                 </Text>
               </Animated.View>

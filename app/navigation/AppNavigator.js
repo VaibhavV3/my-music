@@ -95,7 +95,7 @@ const AppNavigator = () => {
         style: {
           borderTopWidth: 0,
           backgroundColor: color.FIVE,
-          height: '7%',
+          height: 55,
           zIndex: 10,
         },
         keyboardHidesTabBar: true,

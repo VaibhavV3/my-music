@@ -66,6 +66,8 @@ const Pictures = () => {
 
       addImageToList(filePath, fileName, caption);
       setCaption('');
+      setImage(null);
+      alert('Image Added Successfully !');
     } catch (e) {
       console.log(e);
     }
