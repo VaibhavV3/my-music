@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, StatusBar } from 'react-native';
+import { View, StyleSheet, StatusBar, Dimensions } from 'react-native';
 import color from '../misc/color';
 
 /**

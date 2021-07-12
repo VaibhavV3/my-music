@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    color: color.SECONDARY,
+    color: color.FIVE,
   },
   separator: {
     width: width - 40,
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: 14,
-    color: color.FIVE,
+    color: color.TERNARY,
   },
 });
 export default AudioListItem;

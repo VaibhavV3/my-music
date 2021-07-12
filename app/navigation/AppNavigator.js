@@ -89,23 +89,34 @@ const AppNavigator = () => {
 
   return (
     <Tab.Navigator
-    // tabBarOptions={{
-    //   style: {
-    //     backgroundColor: color.FIVE,
-    //     height: '7%',
-    //   },
-    //   activeTintColor: color.SECONDARY,
-    //   inactiveTintColor: color.APPLICATION_BG,
-    //   showLabel: true,
-    //   allowFontScaling: true,
-    // }}
+      tabBarOptions={{
+        style: {
+          borderTopWidth: 0,
+          backgroundColor: color.FIVE,
+          height: '7%',
+          zIndex: 10,
+        },
+        activeBackgroundColor: color.TERNARY,
+        // activeTintColor: color.SECONDARY,
+        // inactiveTintColor: color.APPLICATION_BG,
+        showLabel: true,
+        allowFontScaling: true,
+        labelStyle: {
+          color: color.PRIMARY,
+          fontSize: 13,
+        },
+      }}
     >
       <Tab.Screen
         name="AudioList"
         component={AudioList}
         options={{
-          tabBarIcon: ({ size }) => (
-            <MaterialIcons name="headset" size={size} color={color.SECONDARY} />
+          tabBarIcon: ({ focused, size }) => (
+            <MaterialIcons
+              name="headset"
+              size={size}
+              color={focused ? color.WHITE : color.SECONDARY}
+            />
           ),
         }}
       />
@@ -113,11 +124,11 @@ const AppNavigator = () => {
         name="Player"
         component={Player}
         options={{
-          tabBarIcon: ({ size }) => (
+          tabBarIcon: ({ focused, size }) => (
             <FontAwesome5
               name="compact-disc"
               size={size}
-              color={color.SECONDARY}
+              color={focused ? color.WHITE : color.SECONDARY}
             />
           ),
         }}
@@ -126,8 +137,13 @@ const AppNavigator = () => {
         name="Pictures"
         component={PlayList}
         options={{
-          tabBarIcon: ({ size }) => (
-            <Fontisto name="picture" size={size} color={color.SECONDARY} />
+          tabBarIcon: ({ focused, size }) => (
+            <Fontisto
+              name="picture"
+              size={size}
+              color={color.SECONDARY}
+              color={focused ? color.WHITE : color.SECONDARY}
+            />
           ),
         }}
       />
@@ -135,11 +151,11 @@ const AppNavigator = () => {
         name="Settings"
         component={Pictures}
         options={{
-          tabBarIcon: ({ size }) => (
+          tabBarIcon: ({ focused, size }) => (
             <MaterialIcons
               name="settings"
               size={size}
-              color={color.SECONDARY}
+              color={focused ? color.WHITE : color.SECONDARY}
             />
           ),
         }}
