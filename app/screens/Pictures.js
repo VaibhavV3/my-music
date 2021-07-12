@@ -68,27 +68,6 @@ const Pictures = () => {
     }
   };
 
-  const saveImage = (data, fileName) => {
-    const folderPath = '/storage/emulated/0/my-music';
-    const path = folderPath + '/' + fileName;
-
-    RNFetchBlob.fs.isDir(folderPath).then((isDir) => {
-      if (isDir) {
-        addImage(data, path);
-      } else {
-        RNFetchBlob.fs.mkdir(folderPath).then(() => {
-          addImage(data, path);
-        });
-      }
-    });
-  };
-
-  const addImage = (data, path) => {
-    RNFetchBlob.fs.createFile(path, data, 'base64').then(() => {
-      console.log('Image saved');
-    });
-  };
-
   return (
     <Screen style={{ flex: 1 }}>
       <View style={styles.uploadContainer}>

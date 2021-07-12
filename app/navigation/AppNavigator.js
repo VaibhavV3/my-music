@@ -10,6 +10,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import LottieView from 'lottie-react-native';
 import color from '../misc/color';
+import { useKeepAwake } from 'expo-keep-awake';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +21,7 @@ const { height } = Dimensions.get('window').height;
  * @function AppNavigator
  **/
 const AppNavigator = () => {
+  useKeepAwake();
   const initialLoginState = {
     isLoading: true,
     userName: '',
