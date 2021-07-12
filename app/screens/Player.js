@@ -1,15 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, StatusBar } from 'react-native';
 import color from '../misc/color';
 import Slider from '@react-native-community/slider';
 import PlayerButton from '../components/PlayerButton';
 import { useContext } from 'react';
 import { AudioContext } from '../context/AudioProvider';
-import { pause, play, playNext, resume } from '../misc/audioController';
-import { storeAudioForNextOpening } from '../misc/helper';
+import {
+  pause,
+  play,
+  playNext,
+  resume,
+  moveAudio,
+} from '../misc/audioController';
+import { convertTime, storeAudioForNextOpening } from '../misc/helper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import LottieView from 'lottie-react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('window').width;
 /**
@@ -18,6 +23,8 @@ const { width } = Dimensions.get('window').width;
  **/
 const Player = () => {
   var lottieSize = 16;
+
+  const [currentPosition, setCurrentPosition] = useState(0);
   const context = useContext(AudioContext);
   const { playbackPosition, playbackDuration } = context;
   const calculateSeekBar = () => {
@@ -25,6 +32,13 @@ const Player = () => {
       return playbackPosition / playbackDuration;
     }
     return 0;
+  };
+
+  const renderCurrentTime = () => {
+    if (!context.soundObj && context.currentAudio.lastPosition) {
+      return convertTime(context.currentAudio.lastPosition / 1000);
+    }
+    return convertTime(context.playbackPosition / 1000);
   };
 
   useEffect(() => {
@@ -246,9 +260,20 @@ const Player = () => {
           <Text numberOfLines={1} style={{ color: color.SECONDARY }}>
             {context.currentAudio.filename}
           </Text>
-          <Text style={styles.audioCount}>{`${
-            context.currentAudioIndex + 1
-          } / ${context.totalAudioCount}`}</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              paddingHorizontal: 15,
+            }}
+          >
+            <Text style={{ color: color.SECONDARY }}>
+              {currentPosition ? currentPosition : renderCurrentTime()}/
+            </Text>
+            <Text style={{ color: color.SECONDARY }}>
+              {convertTime(context.currentAudio.duration)}
+            </Text>
+          </View>
         </View>
         <Slider
           style={{ width: width, height: 40 }}
@@ -257,6 +282,24 @@ const Player = () => {
           value={calculateSeekBar()}
           minimumTrackTintColor={color.SECONDARY}
           maximumTrackTintColor={color.PRIMARY}
+          onValueChange={(value) => {
+            setCurrentPosition(
+              convertTime(value * context.currentAudio.duration)
+            );
+          }}
+          onSlidingStart={async () => {
+            if (!context.isPlaying) return;
+
+            try {
+              await pause(context.playbackObj);
+            } catch (error) {
+              console.log('error inside onSlidingStart callback', error);
+            }
+          }}
+          onSlidingComplete={async (value) => {
+            await moveAudio(context, value);
+            setCurrentPosition(0);
+          }}
         />
         <View style={styles.audioControllers}>
           <PlayerButton iconType="PREV" onPress={handlePrev} />

@@ -35,3 +35,30 @@ export const playNext = async (playbackObj, uri) => {
     console.log('Error inside playNext helper method', error.message);
   }
 };
+
+export const moveAudio = async (context, value) => {
+  const { soundObj, isPlaying, playbackObj, updateState } = context;
+  if (soundObj === null || !isPlaying) return;
+
+  try {
+    const status = await playbackObj.setPositionAsync(
+      Math.floor(soundObj.durationMillis * value)
+    );
+    updateState(context, {
+      soundObj: status,
+      playbackPosition: status.positionMillis,
+      isPlaying: true,
+    });
+    //console.log(status);
+
+    const st = await resume(playbackObj);
+    updateState(context, {
+      soundObj: st,
+      playbackPosition: st.positionMillis,
+      isPlaying: true,
+    });
+    //console.log(st);
+  } catch (error) {
+    console.log('error inside onSlidingComplete callback', error);
+  }
+};
