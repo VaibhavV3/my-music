@@ -22,7 +22,7 @@ const { width } = Dimensions.get('window').width;
  * @function Player
  **/
 const Player = () => {
-  var lottieSize = 16;
+  var lottieSize = 22;
 
   const [currentPosition, setCurrentPosition] = useState(0);
   const context = useContext(AudioContext);
@@ -207,10 +207,28 @@ const Player = () => {
         src = require('./../../assets/warp-speed-ring.json');
         break;
       case 14:
-        src = require('./../../assets/beach-dance.json');
+        src = require('./../../assets/singer-in-studio.json');
         break;
       case 15:
+        src = require('./../../assets/balcony-leisure.json');
+        break;
+      case 16:
         src = require('./../../assets/birthday-cake-celebration.json');
+        break;
+      case 17:
+        src = require('./../../assets/fathers-day.json');
+        break;
+      case 18:
+        src = require('./../../assets/valentine-day.json');
+        break;
+      case 19:
+        src = require('./../../assets/running-on-treadmill.json');
+        break;
+      case 20:
+        src = require('./../../assets/feu-de-camp.json');
+        break;
+      case 21:
+        src = require('./../../assets/lord-shiva.json');
         break;
     }
     //console.log(src);

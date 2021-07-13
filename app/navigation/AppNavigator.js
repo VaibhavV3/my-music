@@ -65,24 +65,11 @@ const AppNavigator = () => {
           backgroundColor: color.APPLICATION_BG,
         }}
       >
-        {/* <LottieView
-          source={require('./../../assets/love-icon-animation.json')}
-          autoPlay
-          loop
-        /> */}
         <LottieView
           source={require('./../../assets/love-icon-animation.json')}
           autoPlay
           loop
           style={{ elevation: 100 }}
-          backgroundColor="transperent"
-        />
-        <LottieView
-          source={require('./../../assets/music-note-character.json')}
-          autoPlay
-          loop
-          height={300}
-          width={width}
           backgroundColor="transperent"
         />
       </View>
