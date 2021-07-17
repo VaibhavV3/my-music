@@ -80,6 +80,9 @@ const Pictures = () => {
           <Text style={styles.text}>Choose Image</Text>
         </Pressable>
       </View>
+      <View style={styles.captionLabel}>
+        <Text style={styles.label}>Enter Caption (Optional): </Text>
+      </View>
       <TextInput
         value={caption}
         style={styles.input}
@@ -88,7 +91,7 @@ const Pictures = () => {
       />
       <View style={styles.buttonContainer}>
         <Pressable onPress={addImage} style={styles.button}>
-          <Text style={styles.text}>Add Image</Text>
+          <Text style={styles.text}>Submit Image</Text>
         </Pressable>
       </View>
     </Screen>
@@ -131,6 +134,18 @@ const styles = StyleSheet.create({
     color: color.BUTTONS,
     fontSize: 18,
     padding: 5,
+  },
+  captionLabel: {
+    padding: 20,
+    alignSelf: 'center',
+    width: width - 40,
+  },
+  label: {
+    fontSize: 14,
+    lineHeight: 21,
+    letterSpacing: 0.25,
+    color: color.FIVE,
+    alignSelf: 'flex-start',
   },
 });
 export default Pictures;
