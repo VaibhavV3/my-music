@@ -52,6 +52,7 @@ export const getCaption = async (fileName) => {
 
 export const convertTime = (minutes) => {
   // minutes is actually seconds..
+  if (minutes === 0) return '00:00';
   if (minutes) {
     const hrs = minutes / 60;
     const minute = hrs.toString().split('.')[0];

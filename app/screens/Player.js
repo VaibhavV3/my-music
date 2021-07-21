@@ -38,6 +38,9 @@ const Player = () => {
     if (!context.soundObj && context.currentAudio.lastPosition) {
       return convertTime(context.currentAudio.lastPosition / 1000);
     }
+    if (context.playbackPosition === null) {
+      return convertTime(0);
+    }
     return convertTime(context.playbackPosition / 1000);
   };
 
